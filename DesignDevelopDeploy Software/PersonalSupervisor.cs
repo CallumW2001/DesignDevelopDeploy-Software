@@ -90,13 +90,30 @@ namespace DesignDevelopDeploy_Software
             }
         }
 
-        public void BookMeeting(string student, string time)
+        public void BookMeeting(string student, string time, DateOnly date)
         {
             DateTime dt = DateTime.Now;
+            bool studentExists = false;
 
-            StreamWriter writetext = File.AppendText("Meeting Times.txt");
-            writetext.WriteLine(name + " booked a meeting with " + student + " for: " + dt);
-            writetext.Close();
+            for (int i = 0; i < students.Count(); i++)
+            {
+                if (student == students[i])
+                {
+                    studentExists = true;
+                }
+            }
+            if(studentExists == true)
+            {
+                StreamWriter writetext = File.AppendText("Meeting Times.txt");
+                writetext.WriteLine(name + " booked a meeting with " + student + " for: " + time + " on " + date );
+                writetext.Close();
+                Console.WriteLine("Meeting created with " + student + " for: " + time + " on " + date);
+            }
+            else
+            {
+                Console.WriteLine("Student doesn't exist or is not assigned to " + name);
+            }
+            
         }
 
         public void ViewMeeting()
@@ -106,8 +123,7 @@ namespace DesignDevelopDeploy_Software
                 string[] linesplit = line.Split(" ");
                 for (int i = 0; i < students.Count(); i++)
                 {
-                    Console.WriteLine(linesplit[i]);
-                    if (linesplit[0] == students[i])
+                    if (linesplit[0] == students[i] || linesplit[0] == name)
                     {
                         Console.WriteLine(line);
                         break;

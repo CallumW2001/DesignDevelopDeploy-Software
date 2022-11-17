@@ -239,7 +239,24 @@ while (true)
         }
         if (input == 1)
         {
+            Console.WriteLine("Enter name of student to book a meeting with: ");
+            string stu = Console.ReadLine();
+            Console.WriteLine("Enter Date to book meeting: (DD/MM/YY)");
 
+            string line = Console.ReadLine();
+            DateOnly dt;
+            while (!DateOnly.TryParseExact(line, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+            {
+                Console.WriteLine("Invalid date, please retry");
+                line = Console.ReadLine();
+            }
+
+            Console.WriteLine("Enter time to book meeting: (HH:MM)");
+            string[] ar;
+            string s = Console.ReadLine();
+            ar = s.Split('-');
+            DateTime dateTime = DateTime.Parse(ar[0]);
+            ps.BookMeeting(stu, dateTime.ToString("HH:mm"), dt);
         }
         else if (input == 2)
         {
@@ -247,8 +264,9 @@ while (true)
         }
         else if (input == 3)
         {
-            ps.AddStudent("craig");
-            ps.AddStudent("max");
+            Console.WriteLine("Enter name of student to add to personal supervisor management: ");
+            string addstu = Console.ReadLine();
+            ps.AddStudent(addstu);
         }
         else if (input == 4)
         {
