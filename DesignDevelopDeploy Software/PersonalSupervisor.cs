@@ -132,5 +132,41 @@ namespace DesignDevelopDeploy_Software
                 }
             }
         }
+
+        public void DeleteStudent(string login)
+        {
+            bool exists = false;
+            foreach (string line in File.ReadLines("Login Details.txt"))
+            {
+                string[] linesplit = line.Split("=");
+                if (linesplit[0] == login && linesplit[2] == "STUDENT")
+                {
+                    Console.WriteLine("Student removed from Personal Supervisor. ");
+                    exists = true;
+                    students.Remove(linesplit[3]);
+
+                    string removeline = (name + ":" + linesplit[3]);
+
+                    string[] file = File.ReadAllLines("PS Students.txt");
+                    string[] newfile = { };
+
+                    for (int i = 0; i < file.Length; i++)
+                    {
+                        if (file[i] != removeline)
+                        {
+                            newfile[i] = file[i];
+                        }
+                    }
+
+                    
+
+                }
+                else
+                {
+                    Console.WriteLine("Student is not assigned to Personal Supervisor.");
+                }
+                
+            }
+        }
     }
 }

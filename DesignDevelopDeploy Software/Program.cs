@@ -270,7 +270,9 @@ while (true)
         }
         else if (input == 4)
         {
-
+            Console.WriteLine("Enter student name to remove from PS: ");
+            string stuname = Console.ReadLine();
+            ps.DeleteStudent(stuname);
         }
         else if(input == 5)
         {
