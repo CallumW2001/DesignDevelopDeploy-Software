@@ -30,15 +30,33 @@ namespace DesignDevelopDeploy_Software
         public void ReportStatus(string status)
         {
             StreamWriter writetext = File.AppendText("Student Status.txt");
-            writetext.WriteLine(status);
+            writetext.WriteLine(status + " @ " + DateTime.Now);
             writetext.Close();
         }
         public void BookMeeting(string time, DateOnly dt)
         {
-            time = time;
-
+            string[] linesplit = { };
+            bool psfound = false;
             StreamWriter writetext = File.AppendText("Meeting Times.txt");
-            writetext.WriteLine(name + " booked a meeting for: " + time + " on " + dt);
+            foreach (string line in File.ReadLines("PS Students.txt"))
+            {
+                linesplit = line.Split(":");
+                if (linesplit[1] == name)
+                {
+                    psfound = true;
+                    break;                  
+                }
+            }
+            if(psfound == true)
+            {
+                writetext.WriteLine(name + " booked a meeting for: " + time + " on " + dt + " with " + linesplit[0]);
+            }
+            else
+            {
+                Console.WriteLine("Student is not assigned to a Personal Supervisor, nobody to book a meeting with.");
+            }
+
+           
             writetext.Close();
         }
     }

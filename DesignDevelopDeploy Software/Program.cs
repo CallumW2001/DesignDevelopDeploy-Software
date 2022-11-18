@@ -298,7 +298,7 @@ while (true)
         }
         if (input == 1)
         {
-
+            st.ViewInteractions();
         }
         else if (input == 2)
         {

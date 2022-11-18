@@ -23,5 +23,21 @@ namespace DesignDevelopDeploy_Software
                 Console.WriteLine(line);
             }
         }
+
+        public void ViewInteractions()
+        {
+            Console.WriteLine("Student Status: ");
+            foreach(string line in File.ReadLines("Student Status.txt"))
+            {            
+                Console.WriteLine(line);
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Meetings between Students & PS: ");
+            foreach(string line2 in File.ReadLines("Meeting Times.txt"))
+            {
+                Console.WriteLine(line2);
+            }
+        }
     }
 }
