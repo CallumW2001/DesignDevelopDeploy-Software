@@ -4,12 +4,17 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 
-string username;
-string password;
-string fileName = "Student Status";
-string fileName2 = "Login Details";
-string fileName3 = "PS Students";
-string fileName4 = "Meeting Times";
+
+string username = "";
+string password = "";
+string fileName = "Student Status.txt";
+string fileName2 = "Login Details.txt";
+string fileName3 = "PS Students.txt";
+string fileName4 = "Meeting Times.txt";
+CreateFile(fileName);
+CreateFile(fileName2);
+CreateFile(fileName3);
+CreateFile(fileName4);
 bool Login = false;
 bool studentlogin = false;
 bool personalsupervisor = false;
@@ -20,10 +25,7 @@ SeniorTutor st = new SeniorTutor();
 int option;
 int option2;
 
-CreateFile(fileName);
-CreateFile(fileName2);
-CreateFile(fileName3);
-CreateFile(fileName4);
+
 
 while (true)
 {
@@ -76,8 +78,8 @@ while (true)
             case 2:
                 Console.WriteLine("Enter your name: ");
                 name = Console.ReadLine();
-                ps.CreateAccount(newUsername, newPassword);
                 ps = new PersonalSupervisor(name);
+                ps.CreateAccount(newUsername, newPassword);               
                 break;
             case 3:
                 st.CreateAccount(newUsername, newPassword);
@@ -93,10 +95,11 @@ while (true)
         while (Login == false)
         {
 
-            Console.WriteLine("Enter Username");
-            username = Console.ReadLine().ToUpper();
-            Console.WriteLine("Enter Password");
-            password = Console.ReadLine().ToUpper();
+                Console.WriteLine("Enter Username");
+                username = Console.ReadLine().ToUpper();
+                Console.WriteLine("Enter Password");
+                password = Console.ReadLine().ToUpper();
+
 
             string file = File.ReadAllText("Login Details.txt");
             string[] fileSplit1 = file.Split("\r\n");
@@ -144,6 +147,7 @@ while (true)
             }
 
         }
+       
         Login = false;
     }
 
@@ -312,22 +316,13 @@ while (true)
 
 void CreateFile(string fileName)
 {
-    try
-
+    if (!File.Exists(fileName))
     {
-        // Check if file already exists. If yes, delete it.     
-        if (File.Exists(fileName))
-        {
-            File.Delete(fileName);
-        }
-
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e);
-    }
-    //Create new file
-    FileStream fs = File.Create(fileName);
+        FileStream fs = File.Create(fileName);
+        fs.Close();
+    }    //Create new file
+    
+    
 
 }   
 

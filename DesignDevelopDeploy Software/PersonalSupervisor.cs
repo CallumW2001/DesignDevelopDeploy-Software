@@ -155,7 +155,7 @@ namespace DesignDevelopDeploy_Software
                 {                
                     exists = true;
                     students.Remove(linesplit[3]);
-                    Console.WriteLine("Student removed from Personal Supervisor. ");
+                    Console.WriteLine(linesplit[3] + " removed from Personal Supervisor. ");
                     string removeline = (name + ":" + linesplit[3]);
 
                     string[] file = File.ReadAllLines("PS Students.txt");                  
