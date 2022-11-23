@@ -86,8 +86,7 @@ while (true)
                 break;
 
         }
-        Console.WriteLine("Account successfully created.");
-
+        Console.WriteLine("Account successfully created.");      
     }
 
     else if (option == 1)
@@ -325,6 +324,10 @@ while (true)
             {
                 break;
             }    
+        }
+        else
+        {
+            break;
         }
     }
 
