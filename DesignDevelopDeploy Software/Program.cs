@@ -158,155 +158,173 @@ while (true)
     }
 
 
-
-
-    if (studentlogin == true)
+    while (true)
     {
-        int input;
-        while (true)
-        {
-            Console.WriteLine("1. Book a meeting with personal supervisor");
-            Console.WriteLine("2. Report status");
-            try
-            {
-                input = Convert.ToInt32(Console.ReadLine());
-                break;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
 
-        if (input == 1)
+
+        if (studentlogin == true)
         {
-            Console.WriteLine("Enter Date to book meeting: (DD/MM/YY)");
-            string line = Console.ReadLine();
-            DateOnly dt;
-            while (!DateOnly.TryParseExact(line, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+            int input;
+            while (true)
             {
-                Console.WriteLine("Invalid date, please retry");
-                line = Console.ReadLine();
+                Console.WriteLine("1. Book a meeting with personal supervisor");
+                Console.WriteLine("2. Report status");
+                Console.WriteLine("3. Logout");
+                try
+                {
+                    input = Convert.ToInt32(Console.ReadLine());
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
 
-            Console.WriteLine("Enter time to book meeting: (HH:MM)");
+            if (input == 1)
+            {
+                Console.WriteLine("Enter Date to book meeting: (DD/MM/YY)");
+                string line = Console.ReadLine();
+                DateOnly dt;
+                while (!DateOnly.TryParseExact(line, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+                {
+                    Console.WriteLine("Invalid date, please retry");
+                    line = Console.ReadLine();
+                }
+
+                Console.WriteLine("Enter time to book meeting: (HH:MM)");
                 string[] ar;
                 string s = Console.ReadLine();
                 ar = s.Split('-');
-                DateTime dateTime = DateTime.Parse(ar[0]);          
+                DateTime dateTime = DateTime.Parse(ar[0]);
 
                 student.BookMeeting(dateTime.ToString("HH:mm"), dt);
-        }
-        else if (input == 2)
-        {
-            Console.WriteLine("Write your status: ");
-            string status = Console.ReadLine();
-
-            // convert everything to TimeSpan
-            TimeSpan start = new TimeSpan(07, 0, 0);
-            TimeSpan end = new TimeSpan(18, 0, 0);
-            TimeSpan now = DateTime.Now.TimeOfDay;
-            // see if start comes before end
-
-            if(now < start || now > end)
-            {
-                Console.WriteLine("Can not report status at time: " + now + ". Must be between 07:00 & 18:00");
             }
-            else
+            else if (input == 2)
             {
-                student.ReportStatus(student.Name + ": " + status);
-                Console.WriteLine("Report successful.");
+                Console.WriteLine("Write your status: ");
+                string status = Console.ReadLine();
+
+                // convert everything to TimeSpan
+                TimeSpan start = new TimeSpan(07, 0, 0);
+                TimeSpan end = new TimeSpan(18, 0, 0);
+                TimeSpan now = DateTime.Now.TimeOfDay;
+                // see if start comes before end
+
+                if (now < start || now > end)
+                {
+                    Console.WriteLine("Can not report status at time: " + now + ". Must be between 07:00 & 18:00");
+                }
+                else
+                {
+                    student.ReportStatus(student.Name + ": " + status);
+                    Console.WriteLine("Report successful.");
+                }
+
+
             }
-        
-            
-        }
-    }
-    else if (personalsupervisor == true)
-    {
-        int input;
-        while (true)
-        {
-            Console.WriteLine("1. Book a meeting with student");
-            Console.WriteLine("2. View status of all their students");
-            Console.WriteLine("3. Add students to monitor");
-            Console.WriteLine("4. Remove students to monitor");
-            Console.WriteLine("5. View meeting times of your students.");
-            try
+            else if(input == 3)
             {
-                input = Convert.ToInt32(Console.ReadLine());
                 break;
             }
-            catch (Exception e)
+        }
+        else if (personalsupervisor == true)
+        {
+            int input;
+            while (true)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("1. Book a meeting with student");
+                Console.WriteLine("2. View status of all their students");
+                Console.WriteLine("3. Add students to monitor");
+                Console.WriteLine("4. Remove students to monitor");
+                Console.WriteLine("5. View meeting times of your students.");
+                Console.WriteLine("6. Logout");
+                try
+                {
+                    input = Convert.ToInt32(Console.ReadLine());
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
-        }
-        if (input == 1)
-        {
-            Console.WriteLine("Enter name of student to book a meeting with: ");
-            string stu = Console.ReadLine();
-            Console.WriteLine("Enter Date to book meeting: (DD/MM/YY)");
-
-            string line = Console.ReadLine();
-            DateOnly dt;
-            while (!DateOnly.TryParseExact(line, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+            if (input == 1)
             {
-                Console.WriteLine("Invalid date, please retry");
-                line = Console.ReadLine();
+                Console.WriteLine("Enter name of student to book a meeting with: ");
+                string stu = Console.ReadLine();
+                Console.WriteLine("Enter Date to book meeting: (DD/MM/YY)");
+
+                string line = Console.ReadLine();
+                DateOnly dt;
+                while (!DateOnly.TryParseExact(line, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out dt))
+                {
+                    Console.WriteLine("Invalid date, please retry");
+                    line = Console.ReadLine();
+                }
+
+                Console.WriteLine("Enter time to book meeting: (HH:MM)");
+                string[] ar;
+                string s = Console.ReadLine();
+                ar = s.Split('-');
+                DateTime dateTime = DateTime.Parse(ar[0]);
+                ps.BookMeeting(stu, dateTime.ToString("HH:mm"), dt);
             }
-
-            Console.WriteLine("Enter time to book meeting: (HH:MM)");
-            string[] ar;
-            string s = Console.ReadLine();
-            ar = s.Split('-');
-            DateTime dateTime = DateTime.Parse(ar[0]);
-            ps.BookMeeting(stu, dateTime.ToString("HH:mm"), dt);
-        }
-        else if (input == 2)
-        {
-            ps.ReadStatus();
-        }
-        else if (input == 3)
-        {
-            Console.WriteLine("Enter name of student to add to personal supervisor management: ");
-            string addstu = Console.ReadLine();
-            ps.AddStudent(addstu);
-        }
-        else if (input == 4)
-        {
-            Console.WriteLine("Enter student name to remove from PS: ");
-            string stuname = Console.ReadLine();
-            ps.DeleteStudent(stuname);
-        }
-        else if(input == 5)
-        {
-            ps.ViewMeeting();
-        }
-    }
-    else if (seniortutor == true)
-    {
-        int input;
-        while (true)
-        {
-            Console.WriteLine("1. View PS and student interactions");
-            Console.WriteLine("2. View status of all students");
-            try
+            else if (input == 2)
             {
-                input = Convert.ToInt32(Console.ReadLine());
+                ps.ReadStatus();
+            }
+            else if (input == 3)
+            {
+                Console.WriteLine("Enter name of student to add to personal supervisor management: ");
+                string addstu = Console.ReadLine();
+                ps.AddStudent(addstu);
+            }
+            else if (input == 4)
+            {
+                Console.WriteLine("Enter student name to remove from PS: ");
+                string stuname = Console.ReadLine();
+                ps.DeleteStudent(stuname);
+            }
+            else if (input == 5)
+            {
+                ps.ViewMeeting();
+            }
+            else if(input == 6)
+            {
                 break;
             }
-            catch (Exception e)
+        }
+        else if (seniortutor == true)
+        {
+            int input;
+            while (true)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("1. View PS and student interactions");
+                Console.WriteLine("2. View status of all students");
+                Console.WriteLine("3. Logout");
+                try
+                {
+                    input = Convert.ToInt32(Console.ReadLine());
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
-        }
-        if (input == 1)
-        {
-            st.ViewInteractions();
-        }
-        else if (input == 2)
-        {
-            st.ReturnStatus();
+            if (input == 1)
+            {
+                st.ViewInteractions();
+            }
+            else if (input == 2)
+            {
+                st.ReturnStatus();
+            }
+            else if(input == 3)
+            {
+                break;
+            }    
         }
     }
 
